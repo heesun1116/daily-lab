@@ -1,11 +1,16 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 import palette from '../../lib/palette';
 
 const Button = (props) => {
-  return <StyledButton {...props}></StyledButton>; // button 이 받아오는 props를 모두 button에 전달
+  return props.to ? (
+    <StyledLink {...props} cyan={props.cyan ? 1 : 0} />
+  ) : (
+    <StyledButton {...props} />
+  ); // button 이 받아오는 props를 모두 button에 전달
 };
-const StyledButton = styled.button`
+const buttonstyle = css`
   border: none;
   border-radius: 4px;
   font-size: 1rem;
@@ -35,5 +40,10 @@ const StyledButton = styled.button`
       }
     `}
 `;
-
+const StyledButton = styled.button`
+  ${buttonstyle}
+`;
+const StyledLink = styled(Link)`
+  ${buttonstyle}
+`;
 export default Button;
