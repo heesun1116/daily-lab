@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import palette from '../../lib/palette';
 import Button from '../common/Button';
@@ -6,31 +7,45 @@ import Responsive from '../common/Responsive';
 import SubInfo from '../common/SubInfo';
 import Tags from '../common/Tags';
 
-const PostList = () => {
+const PostList = ({ posts, loading, error, showWriteButton }) => {
+  //에러발생시
+
+  if (error) {
+    return <PostListBlock>에러가 발생했습니다.</PostListBlock>;
+  }
   return (
-    <PostItemBlock>
+    <PostListBlock>
       <WritePostButtonWrapper>
-        <Button cyan to="/write">
-          새글작성하기
-        </Button>
+        {showWriteButton && (
+          <Button cyan to="/write">
+            새글작성하기
+          </Button>
+        )}
       </WritePostButtonWrapper>
-      <div>
-        <PostItem />
-        <PostItem />
-        <PostItem />
-      </div>
-    </PostItemBlock>
+
+      {!loading && posts && (
+        <div>
+          {posts.map((post) => (
+            <PostItem post={post} key={post._id} />
+          ))}
+        </div>
+      )}
+    </PostListBlock>
   );
 };
 
-const PostItem = () => {
+const PostItem = ({ post }) => {
+  console.log('hi');
+  const { publishedDate, user, tags, title, body, _id } = post;
   return (
-    <PostListBlock>
-      <h2>제목</h2>
-      <SubInfo username="username" publishedDate={new Date()} />
-      <Tags tags={['태그1', '태그2']} />
-      <p>포스트 내용의 일부분</p>
-    </PostListBlock>
+    <PostItemBlock>
+      <h2>
+        <Link to={`/@${user.username}/${_id}`}>{title}</Link>
+      </h2>
+      <SubInfo username={user.username} publishedDate={publishedDate} />
+      <Tags tags={tags} />
+      <p>{body}</p>
+    </PostItemBlock>
   );
 };
 const PostListBlock = styled(Responsive)`
