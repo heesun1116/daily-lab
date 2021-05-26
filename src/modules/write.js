@@ -7,18 +7,12 @@ import { takeLatest } from 'redux-saga/effects';
 
 const INITIALIZE = 'write/INITIALIZE'; // 모든 내용 초기화
 const CHANGE_FIELD = 'write/CHANGE_FIELD'; // 특정 key 값 바꾸기
-const [
-  WRITE_POST,
-  WRITE_POST_SUCCESS,
-  WRITE_POST_FAILURE,
-] = createRequestActionTypes('write/WRITE_POST'); // 포스트 작성
+const [WRITE_POST, WRITE_POST_SUCCESS, WRITE_POST_FAILURE] =
+  createRequestActionTypes('write/WRITE_POST'); // 포스트 작성
 //수정모듈
 const SET_ORIGINAL_POST = 'write/SET_ORIGINAL_POST';
-const [
-  UPDATE_POST,
-  UPDATE_POST_SUCCESS,
-  UPDATE_POST_FAILURE,
-] = createRequestActionTypes('wrtie/UPDATE_POST');
+const [UPDATE_POST, UPDATE_POST_SUCCESS, UPDATE_POST_FAILURE] =
+  createRequestActionTypes('wrtie/UPDATE_POST');
 
 //액션 생성
 export const initialize = createAction(INITIALIZE);
@@ -26,19 +20,24 @@ export const changeField = createAction(CHANGE_FIELD, ({ key, value }) => ({
   key,
   value,
 }));
-export const writePost = createAction(WRITE_POST, ({ title, body, tags }) => ({
-  title,
-  body,
-  tags,
-}));
+export const writePost = createAction(
+  WRITE_POST,
+  ({ title, body, tags, contributes }) => ({
+    title,
+    body,
+    tags,
+    contributes,
+  }),
+);
 export const setOriginalPost = createAction(SET_ORIGINAL_POST, (post) => post);
 export const updatePost = createAction(
   UPDATE_POST,
-  ({ id, title, body, tags }) => ({
+  ({ id, title, body, tags, contributes }) => ({
     id,
     title,
     body,
     tags,
+    contributes,
   }),
 );
 // saga 생성
@@ -54,9 +53,10 @@ const initialState = {
   title: '',
   body: '',
   tags: [],
+  contributes: '',
   post: null,
   postError: null,
-  origianlPostId: null,
+  originalPostId: null,
 };
 
 const write = handleActions(
@@ -88,7 +88,8 @@ const write = handleActions(
       title: post.title,
       body: post.body,
       tags: post.tags,
-      origianlPostId: post._id,
+      contributes: post.contributes,
+      originalPostId: post._id,
     }),
     [UPDATE_POST_SUCCESS]: (state, { payload: post }) => ({
       ...state,

@@ -8,6 +8,7 @@ const HeaderContainer = () => {
   const dispatch = useDispatch();
   const onLogout = () => {
     dispatch(logout());
+    window.location.reload();
   };
   return <Header user={user} onLogout={onLogout} />;
 };

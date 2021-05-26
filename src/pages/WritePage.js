@@ -1,6 +1,7 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import Responsive from '../components/common/Responsive';
+import ContributeBox from '../components/write/ContributeBox';
 
 import EditContainer from '../container/write/EditContainer';
 import TagBoxContainer from '../container/write/TagBoxContainer';
@@ -14,6 +15,7 @@ const WritePage = () => {
       </Helmet>
       <EditContainer />
       <TagBoxContainer />
+      <ContributeBox />
       <WriteActionButtonsContainer />
     </Responsive>
   );

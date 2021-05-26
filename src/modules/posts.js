@@ -5,18 +5,16 @@ import createRequestSaga, {
   createRequestActionTypes,
 } from '../lib/createRequestSaga';
 
-const [
-  LIST_POSTS,
-  LIST_POSTS_SUCCESS,
-  LIST_POSTS_FAILURE,
-] = createRequestActionTypes('posts/LIST_POSTS');
+const [LIST_POSTS, LIST_POSTS_SUCCESS, LIST_POSTS_FAILURE] =
+  createRequestActionTypes('posts/LIST_POSTS');
 
 export const listPosts = createAction(
   LIST_POSTS,
-  ({ tag, username, page }) => ({
+  ({ tag, username, page, contributes }) => ({
     tag,
     username,
     page,
+    contributes,
   }),
 );
 

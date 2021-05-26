@@ -6,27 +6,30 @@ import { updatePost, writePost } from '../../modules/write';
 
 const WriteActionButtonsContainer = ({ history }) => {
   const dispatch = useDispatch();
-  const { title, body, tags, post, postError, orginalPostId } = useSelector(
-    ({ write }) => ({
+  const { title, body, tags, post, postError, originalPostId, contributes } =
+    useSelector(({ write }) => ({
       title: write.title,
       body: write.body,
       tags: write.tags,
       post: write.post,
       postError: write.postError,
-      orginalPostId: write.orginalPostId,
-    }),
-  );
+      contributes: write.contributes,
+      originalPostId: write.originalPostId,
+    }));
 
   // 포스트 등록
   const onPublish = () => {
-    if (orginalPostId) {
-      dispatch(updatePost({ title, body, tags, id: orginalPostId }));
+    if (originalPostId) {
+      dispatch(
+        updatePost({ title, body, tags, id: originalPostId, contributes }),
+      );
     }
     dispatch(
       writePost({
         title,
         body,
         tags,
+        contributes,
       }),
     );
   };
@@ -50,7 +53,7 @@ const WriteActionButtonsContainer = ({ history }) => {
     <WriteActionButtons
       onPublish={onPublish}
       onCancel={onCancel}
-      isEdit={!orginalPostId}
+      isEdit={!originalPostId}
     />
   );
 };

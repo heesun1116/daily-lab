@@ -21,6 +21,12 @@ const PostList = ({ posts, loading, error, showWriteButton }) => {
             새글작성하기
           </Button>
         )}
+        <Button cyan to="/upload">
+          Upload
+        </Button>
+        <Button cyan to="/git">
+          Git
+        </Button>
       </WritePostButtonWrapper>
 
       {!loading && posts && (
@@ -35,7 +41,6 @@ const PostList = ({ posts, loading, error, showWriteButton }) => {
 };
 
 const PostItem = ({ post }) => {
-  console.log('hi');
   const { publishedDate, user, tags, title, body, _id } = post;
   return (
     <PostItemBlock>

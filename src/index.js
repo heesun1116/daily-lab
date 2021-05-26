@@ -11,6 +11,7 @@ import reportWebVitals from './reportWebVitals';
 import createSagaMiddleware from 'redux-saga';
 import { check, tempSetUser } from './modules/user';
 import { HelmetProvider } from 'react-helmet-async';
+import dotenv from 'dotenv';
 
 const sagaMiddleware = createSagaMiddleware();
 const store = createStore(
@@ -30,7 +31,7 @@ function loadUser() {
 }
 sagaMiddleware.run(rootSaga);
 loadUser();
-
+dotenv.config({ path: './' });
 ReactDOM.render(
   <Provider store={store}>
     <BrowserRouter>
